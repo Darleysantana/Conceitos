@@ -133,7 +133,7 @@ img {
     margin: 10px;
     padding: 20px;
 }
-.Curso h1, h2, p{
+.Curso h1, h2{
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -191,4 +191,14 @@ form #mensagem{
     font-weight: bold;
     font-size: 20px;
     transition: ease-in 3s;
+}
+
+.service{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
 }
