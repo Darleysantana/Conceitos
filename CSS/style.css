@@ -149,11 +149,11 @@ img {
 }
 .Curso .descricao{
     position: absolute;
-    top: 400px;
-    left: 730px;
+    top: 320px;
+    left: 760px;
     font-size: larger;
     font-weight: bold;
-   
+    width: 40%;
 }
 #bt{
     position: relative;
