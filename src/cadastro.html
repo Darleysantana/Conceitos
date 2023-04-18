@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="../CSS/style.css">
     <!--icone-->
     <link rel="shortcut icon" href="../IMG/icone.icon" type="image/x-icon">
-    <!--Script-->
-    <script src="../JS/validation.js"></script>
+    <!--Scripts-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    
     <title>Conceito</title>
 </head>
 <body>
@@ -43,8 +45,8 @@
 
 
                 <input type="text" name="data[Nome]" id="Nome" required placeholder="Nome Completo">
-                <input type="email" name="data[Email]" id="email" required placeholder="E-mail">
-                <input type="text" name="data[CPF]" id="cpf" required placeholder="000.000.000-00">
+                <input type="email" name="data[Email]" id="email" required placeholder="E-mail" maxlength="50" autocomplete="off">
+                <input type="text" id="cpf" name="data[CPF]" placeholder="000.000.000-00" required>
                 <input type="text" name="data[curso1]" id="curso1" required placeholder="Curso Principal">
                 <input type="text" name="data[curso2]" id="curso2" placeholder="Curso Secundário">
 
@@ -55,7 +57,12 @@
     </main>
 
     <script src="../JS/main.js"></script>
-    
+    <script>
+        $(document).ready(function() {
+          $('#cpf').mask('000.000.000-00');
+        });
+    </script>
+    <script src="../JS/validationEmail.js"   
 
 </body>
 </html>

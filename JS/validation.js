@@ -1,51 +1,42 @@
-function validarCPF(cpf) {
-    cpf = cpf.replace(/[^\d]+/g,''); // Remove tudo que não é dígito
-    if(cpf == '') return false; // Verifica se o CPF está vazio
-    // Verifica se o CPF tem 11 dígitos
-    if (cpf.length != 11 || 
-        cpf == "00000000000" || 
-        cpf == "11111111111" || 
-        cpf == "22222222222" || 
-        cpf == "33333333333" || 
-        cpf == "44444444444" || 
-        cpf == "55555555555" || 
-        cpf == "66666666666" || 
-        cpf == "77777777777" || 
-        cpf == "88888888888" || 
-        cpf == "99999999999")
-            return false;
-    // Verifica se os dígitos verificadores estão corretos
-    add = 0;
-    for (i=0; i < 9; i ++) add += parseInt(cpf.charAt(i)) * (10 - i);
-    rev = 11 - (add % 11);
-    if (rev == 10 || rev == 11) rev = 0;
-    if (rev != parseInt(cpf.charAt(9))) return false;
-    add = 0;
-    for (i = 0; i < 10; i ++) add += parseInt(cpf.charAt(i)) * (11 - i);
-    rev = 11 - (add % 11);
-    if (rev == 10 || rev == 11) rev = 0;
-    if (rev != parseInt(cpf.charAt(10))) return false;
-    return true;
-}
+jQuery.validator.addMethod("cpf", function(value, element) {
+  value = jQuery.trim(value);
+   value = value.replace('.','');
+   value = value.replace('.','');
+   cpf = value.replace('-','');
+   while(cpf.length < 11 ) cpf = "0"+ cpf;  
+   var expReg = /^0+$|^1+$|^2+$|^3+$|^4+$|^5+$|^6+$|^7+$|^8+$|^9+$/;
+   var a = [];
+   var b = new Number;
+   var c = 11;
+   for (i=0; i<11; i++){
+       a[i] = cpf.charAt(i);
+       if (i < 9) b += (a[i] * --c);
+   }
+   if ((x = b % 11) < 2) { a[9] = 0 } else { a[9] = 11-x }
+   b = 0;
+   c = 11;
+   for (y=0; y<10; y++) b += (a[y] * c--);
+   if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11-x; }
 
-var form = document.querySelector('form');
-form.addEventListener('submit', function(event) {
-  var cpfInput = document.querySelector('#cpf');
-  var cpf = cpfInput.value;
-  if (!validarCPF(cpf)) {
-    // Se o CPF é inválido, previne o envio do formulário e adiciona uma mensagem de erro
-    event.preventDefault();
-    cpfInput.style.border = '1px solid red'; // adiciona uma borda vermelha para indicar o erro
-    alert('CPF inválido! Digite apenas números e verifique se os dígitos estão corretos.');
-  } else {
-    // Se o CPF é válido, permite o envio do formulário
-    cpfInput.style.border = ''; // remove a borda vermelha
-  }
+   var retorno = true;
+   if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10]) || cpf.match(expReg)) retorno = false;
+
+   return this.optional(element) || retorno;
+
+}, "Informe um CPF válido");
+
+
+$(document).ready(function(){
+
+  $("#formH2H").validate({
+     rules: {
+         cpf: {cpf: true, required: true}
+     },
+     messages: {
+        cpf: { cpf: 'CPF inválido'}
+     }
+     ,submitHandler:function(form) {
+        alert('Muito bem, as informações estão corretas.');
+     }
+  });
 });
-
-
-function validarEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
-  }
-  
